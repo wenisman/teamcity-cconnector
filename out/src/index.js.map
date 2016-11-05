@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/index.js"],"names":["lib"],"mappings":";;AAAA;;IAAYA,G","file":"index.js","sourcesContent":["import * as lib from 'lib';\n\n"]}

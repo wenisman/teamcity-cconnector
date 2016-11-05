@@ -40,7 +40,5 @@ export default class Client {
     return maybe.fromNullable(await request
       .delete(Object.assign(options, this._options)));
   }
-
 }
-
 

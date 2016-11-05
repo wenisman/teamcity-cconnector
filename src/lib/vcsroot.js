@@ -3,7 +3,7 @@ import Client from './client';
 export default class VcsRoot extends Client {
   constructor (baseUrl, name, password) {
     super(baseUrl, name, password);
-    this._baseUrl = `${this._baseUrl}/vcs-roots`;
+    this._baseUrl = `${this._baseUrl}/vcs-roots/`;
   }
 
   /**

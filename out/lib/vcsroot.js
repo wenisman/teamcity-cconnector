@@ -25,12 +25,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var VcsRoot = function (_Client) {
   _inherits(VcsRoot, _Client);
 
+  /**
+   * @constructor
+   */
   function VcsRoot(baseUrl, name, password) {
     _classCallCheck(this, VcsRoot);
 
     var _this = _possibleConstructorReturn(this, (VcsRoot.__proto__ || Object.getPrototypeOf(VcsRoot)).call(this, baseUrl, name, password));
 
-    _this._baseUrl = _this._baseUrl + '/vcs-roots';
+    _this._baseUrl = _this._baseUrl + '/vcs-roots/';
     return _this;
   }
 

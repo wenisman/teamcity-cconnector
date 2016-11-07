@@ -2,6 +2,9 @@ import Client from './client';
 
 export default class Project extends Client {
 
+  /**
+   * @constructor
+   */
   constructor (baseurl, username, password) {
     super(baseurl, username, password);
     this._baseUrl = `${this._baseUrl}/projects/`;

@@ -25,6 +25,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BuildType = function (_Client) {
   _inherits(BuildType, _Client);
 
+  /**
+   * @constructor
+   */
   function BuildType(baseUrl, name, password) {
     _classCallCheck(this, BuildType);
 

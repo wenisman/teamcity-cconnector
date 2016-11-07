@@ -25,6 +25,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Project = function (_Client) {
   _inherits(Project, _Client);
 
+  /**
+   * @constructor
+   */
   function Project(baseurl, username, password) {
     _classCallCheck(this, Project);
 

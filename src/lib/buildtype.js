@@ -2,6 +2,9 @@ import Client from './client';
 
 export default class BuildType extends Client {
 
+  /**
+   * @constructor
+   */
   constructor (baseUrl, name, password) {
     super(baseUrl, name, password);
     this._buildTypesUrl = `${this._baseUrl}/buildTypes/`;

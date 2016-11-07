@@ -1,6 +1,10 @@
 import Client from './client';
 
 export default class VcsRoot extends Client {
+
+  /**
+   * @constructor
+   */
   constructor (baseUrl, name, password) {
     super(baseUrl, name, password);
     this._baseUrl = `${this._baseUrl}/vcs-roots/`;
@@ -34,14 +38,12 @@ export default class VcsRoot extends Client {
                       ? encodeURI(`name:${args.projectName}`)
                       : encodeURI(`id:${args.projectId}`),
       properties: {
-        property: [ ]
+        property: [
+          { name: 'url', value: args.url }
+        ]
       },
       vcsName: args.vcsType
     };
-
-    if (args.url) {
-      request.properties.property.push({ name: 'url', value: args.url });
-    }
 
     if (args.branch) {
       request.properties.property.push({ name: 'branch', value: args.branch });

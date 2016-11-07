@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../test/index.js"],"names":["describe","it"],"mappings":";;AAAAA,SAAS,OAAT,EAAkB,YAAM;AACtBC,KAAG,aAAH,EAAkB,YAAM,CACvB,CADD;AAED,CAHD","file":"index.js","sourcesContent":["describe('tests', () => {\n  it('should work', () => {\n  });\n});\n"]}

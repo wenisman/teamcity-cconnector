@@ -8,14 +8,6 @@ var _project = require('../src/lib/project');
 
 var _project2 = _interopRequireDefault(_project);
 
-var _chai = require('chai');
-
-var _chai2 = _interopRequireDefault(_chai);
-
-var _data = require('data.maybe');
-
-var _data2 = _interopRequireDefault(_data);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -23,8 +15,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 describe('buildType tests', function () {
   var bt = void 0,
       proj = void 0;
-  var assert = _chai2.default.assert;
-  var expect = _chai2.default.expect;
 
   before(_asyncToGenerator(regeneratorRuntime.mark(function _callee() {
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -79,6 +69,10 @@ describe('buildType tests', function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            _context3.next = 2;
+            return proj.delete('Parent');
+
+          case 2:
           case 'end':
             return _context3.stop();
         }

@@ -74,6 +74,7 @@ var Project = function (_Client) {
 
     /**
      * Create a basic project with the name provided
+     * @param {string} name - the name of the project to create
      * @param {string} parentId - the Id of the parent that this project belongs to
      */
 

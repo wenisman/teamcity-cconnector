@@ -70,3 +70,12 @@ This is a lot of options but lets go through them
 * url - the url to the Repository, this is mandatory
 * branch - the name of the branch to use
 * vcsType - the type of VcsRoot to create [jetbrains.get|perforce|svn|tfs] 
+
+
+#Testing
+##Docker
+To test the library you can set up a new TeamCity server using JetBrains Docker container
+```
+docker pull jetbrains/teamcity-server
+docker run -p 8111:8111 -d jetbrains/teamcity-server
+```

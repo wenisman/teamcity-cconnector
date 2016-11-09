@@ -16,7 +16,7 @@ describe('project library', () => {
   });
 
   afterEach('should delete a project', async () => {
-    // await proj.delete('Parent');
+    await proj.delete('Parent');
   });
 
   it('should get a project', async () => {

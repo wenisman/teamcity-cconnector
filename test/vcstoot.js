@@ -1,10 +1,8 @@
 import VcsRoot from '../src/lib/vcsroot';
 import Project from '../src/lib/project';
-import chai from 'chai';
 
 describe('VcsRoot tests', () => {
   let vcs, proj;
-  let assert = chai.assert;
 
   before(async () => {
     proj = new Project('http://192.168.99.100:8111', 'testusr', 'testpwd');
@@ -20,25 +18,19 @@ describe('VcsRoot tests', () => {
   });
 
   afterEach('should delete a project', async () => {
-    // await proj.delete('Parent');
+    await proj.delete('Parent');
+    await vcs.delete('Test Vcs Root');
   });
 
-  it('should create and remove a vcsroot', async () => {
-    await vcs.create({
+  it('should create a vcsroot', async () => {
+    const output = await vcs.create({
       name: 'Test Vcs Root',
       projectName: 'Child',
       url: 'https://github.com/wenisman/teamcity-connector.git',
       branch: 'master',
       vcsType: 'jetbrains.git'
-    })
-    .then((result) => {
-      // result.getOrElse(true).should.be(true);
-    })
-    .catch((e) => {
-      console.log(e);
-      assert.fail(null, null, 'unable to create a vcsroot');
     });
 
-    // await vcs.delete('Test Vcs Root');
+    output.isNothing.should.be.false;
   });
 });

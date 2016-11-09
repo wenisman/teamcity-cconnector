@@ -1,12 +1,8 @@
 import BuildType from '../src/lib/buildtype';
 import Project from '../src/lib/project';
-import chai from 'chai';
-import maybe from 'data.maybe';
 
 describe('buildType tests', () => {
   let bt, proj;
-  let assert = chai.assert;
-  let expect = chai.expect;
 
   before(async () => {
     proj = new Project('http://192.168.99.100:8111', 'testusr', 'testpwd');
@@ -22,7 +18,7 @@ describe('buildType tests', () => {
   });
 
   afterEach('should delete a project', async () => {
-    // await proj.delete('Parent');
+    await proj.delete('Parent');
   });
 
   it('should create a buildType', async () => {

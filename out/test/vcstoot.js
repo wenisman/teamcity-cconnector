@@ -74,6 +74,14 @@ describe('VcsRoot tests', function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            _context3.next = 2;
+            return proj.delete('Parent');
+
+          case 2:
+            _context3.next = 4;
+            return vcs.delete('Test Vcs Root');
+
+          case 4:
           case 'end':
             return _context3.stop();
         }
@@ -81,7 +89,8 @@ describe('VcsRoot tests', function () {
     }, _callee3, undefined);
   })));
 
-  it('should create and remove a vcsroot', _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+  it('should create a vcsroot', _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+    var output;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -93,14 +102,15 @@ describe('VcsRoot tests', function () {
               url: 'https://github.com/wenisman/teamcity-connector.git',
               branch: 'master',
               vcsType: 'jetbrains.git'
-            }).then(function (result) {
-              // result.getOrElse(true).should.be(true);
-            }).catch(function (e) {
-              console.log(e);
-              assert.fail(null, null, 'unable to create a vcsroot');
             });
 
           case 2:
+            output = _context4.sent;
+
+
+            output.isNothing.should.be.false;
+
+          case 4:
           case 'end':
             return _context4.stop();
         }

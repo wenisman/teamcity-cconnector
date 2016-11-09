@@ -16,7 +16,7 @@ export default class BuildType extends Client {
    * @param {string} project - the name of the parent project for the buildType
    */
   async get (name, project) {
-    return super._get(`${this._createBuildTypesUrl(project)}name:${name}`);
+    return await super._get({ uri: `${this._createBuildTypesUrl(project)}name:${name}` });
   }
 
   /**
@@ -26,11 +26,11 @@ export default class BuildType extends Client {
    * @param {string} args.template - the id of the template to use for the buildType
    */
   async create (name, projectId, template) {
-    return this._post({ uri: this._buildTypesUrl }, this._createRequestJson({name, projectId, template}));
+    return await this._post({ uri: this._buildTypesUrl }, this._createRequestJson({name, projectId, template}));
   }
 
   _createBuildTypesUrl (project) {
-    return `${this._baseUrl}name:${project}/buildTypes/`;
+    return `${this._baseUrl}/projects/name:${project}/buildTypes/`;
   }
 
   _createRequestJson (args) {

@@ -5,6 +5,10 @@
   "author": "wenisman",
   "license": "MIT",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wenisman/teamcity-connector.git"
+  },
   "scripts": {
     "clean": "rm -rf out",
     "build": "npm run clean && babel src/ -d out/ --source-maps",
@@ -29,6 +33,7 @@
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.2",
     "mocha": "^3.1.2",
+    "mockery": "^2.0.0",
     "nodemon": "^1.11.0",
     "proxyquire": "^1.7.10",
     "sinon": "^1.17.6"

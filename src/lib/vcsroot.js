@@ -15,7 +15,7 @@ export default class VcsRoot extends Client {
    * @param {string} name - the name of the vcs root to look for
    */
   async get (name) {
-    return super.get(`${this._baseUrl}name:${name}`);
+    return await super._get({ uri: `${this._baseUrl}name:${name}` });
   }
 
   /**
@@ -28,15 +28,19 @@ export default class VcsRoot extends Client {
    * @param {string} options.vcsType - (Required) the type of vcs connector to use [jetbrains.get|perforce|svn|tfs]
    */
   async create (options) {
-    return this.post({ uri: this._baseUrl }, this._createRequestJson(options));
+    return await super._post({ uri: this._baseUrl }, this._createRequestJson(options));
+  }
+
+  async delete (name) {
+    return await super._delete({ uri: `${this._baseUrl}name:${name}` });
   }
 
   _createRequestJson (args) {
     var request = {
       name: args.name,
       projectLocator: args.projectName
-                      ? encodeURI(`name:${args.projectName}`)
-                      : encodeURI(`id:${args.projectId}`),
+                      ? `name:${args.projectName}`
+                      : `id:${args.projectId}`,
       properties: {
         property: [
           { name: 'url', value: args.url }

@@ -22,39 +22,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BuildType = function (_Client) {
-  _inherits(BuildType, _Client);
+var VcsRoot = function (_Client) {
+  _inherits(VcsRoot, _Client);
 
   /**
    * @constructor
    */
-  function BuildType(baseUrl, name, password) {
-    _classCallCheck(this, BuildType);
+  function VcsRoot(baseUrl, name, password) {
+    _classCallCheck(this, VcsRoot);
 
-    var _this = _possibleConstructorReturn(this, (BuildType.__proto__ || Object.getPrototypeOf(BuildType)).call(this, baseUrl, name, password));
+    var _this = _possibleConstructorReturn(this, (VcsRoot.__proto__ || Object.getPrototypeOf(VcsRoot)).call(this, baseUrl, name, password));
 
-    _this._buildTypesUrl = _this._baseUrl + '/buildTypes/';
+    _this._baseUrl = _this._baseUrl + '/vcs-roots/';
     return _this;
   }
 
   /**
-   * Get the buildType that matches the name provided
-   * @param {string} name - the name of the buildType to look for
-   * @param {string} project - the name of the parent project for the buildType
+   * Get the vcs root that matches the name provided
+   * @param {string} name - the name of the vcs root to look for
    */
 
 
-  _createClass(BuildType, [{
+  _createClass(VcsRoot, [{
     key: 'get',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(name, project) {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(name) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                return _context.abrupt('return', _get(BuildType.prototype.__proto__ || Object.getPrototypeOf(BuildType.prototype), '_get', this).call(this, this._createBuildTypesUrl(project) + 'name:' + name));
+                _context.next = 2;
+                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + name });
 
-              case 1:
+              case 2:
+                return _context.abrupt('return', _context.sent);
+
+              case 3:
               case 'end':
                 return _context.stop();
             }
@@ -62,7 +65,7 @@ var BuildType = function (_Client) {
         }, _callee, this);
       }));
 
-      function get(_x, _x2) {
+      function get(_x) {
         return _ref.apply(this, arguments);
       }
 
@@ -71,22 +74,29 @@ var BuildType = function (_Client) {
 
     /**
      * Create the request to send to teamcity
-     * @param {string} args.name - the name of the buildType to create
-     * @param {string} args.projectId - the id of the project the buildType will belong to
-     * @param {string} args.template - the id of the template to use for the buildType
+     * @param {string} options.name - (Required) the name of the Vcs Root to create
+     * @param {string} options.projectName - the name of the project the VcsRoot will belong to
+     * @param {string} options.projectId - the name of the project the VcsRoot will belong to
+     * @param {string} options.url - (Required) the url to the repository to use for the vcs root
+     * @param {string} options.branch - the main branch to use for the repository
+     * @param {string} options.vcsType - (Required) the type of vcs connector to use [jetbrains.get|perforce|svn|tfs]
      */
 
   }, {
     key: 'create',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, projectId, template) {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(options) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                return _context2.abrupt('return', this._post({ uri: this._buildTypesUrl }, this._createRequestJson({ name: name, projectId: projectId, template: template })));
+                _context2.next = 2;
+                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_post', this).call(this, { uri: this._baseUrl }, this._createRequestJson(options));
 
-              case 1:
+              case 2:
+                return _context2.abrupt('return', _context2.sent);
+
+              case 3:
               case 'end':
                 return _context2.stop();
             }
@@ -94,37 +104,62 @@ var BuildType = function (_Client) {
         }, _callee2, this);
       }));
 
-      function create(_x3, _x4, _x5) {
+      function create(_x2) {
         return _ref2.apply(this, arguments);
       }
 
       return create;
     }()
   }, {
-    key: '_createBuildTypesUrl',
-    value: function _createBuildTypesUrl(project) {
-      return this._baseUrl + 'name:' + project + '/buildTypes/';
-    }
+    key: 'delete',
+    value: function () {
+      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(name) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + name });
+
+              case 2:
+                return _context3.abrupt('return', _context3.sent);
+
+              case 3:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function _delete(_x3) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return _delete;
+    }()
   }, {
     key: '_createRequestJson',
     value: function _createRequestJson(args) {
       var request = {
         name: args.name,
-        projectId: args.projectId
+        projectLocator: args.projectName ? 'name:' + args.projectName : 'id:' + args.projectId,
+        properties: {
+          property: [{ name: 'url', value: args.url }]
+        },
+        vcsName: args.vcsType
       };
 
-      if (args.template) {
-        request.template = {
-          id: args.template
-        };
+      if (args.branch) {
+        request.properties.property.push({ name: 'branch', value: args.branch });
       }
 
       return request;
     }
   }]);
 
-  return BuildType;
+  return VcsRoot;
 }(_client2.default);
 
-exports.default = BuildType;
-//# sourceMappingURL=buildtype.js.map
+exports.default = VcsRoot;
+//# sourceMappingURL=vcsroot.js.map

@@ -51,9 +51,13 @@ var Project = function (_Client) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                return _context.abrupt('return', _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + name }));
+                _context.next = 2;
+                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + name });
 
-              case 1:
+              case 2:
+                return _context.abrupt('return', _context.sent);
+
+              case 3:
               case 'end':
                 return _context.stop();
             }
@@ -81,9 +85,13 @@ var Project = function (_Client) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                return _context2.abrupt('return', this._post({ uri: this._baseUrl }, this._createRequestJson({ name: name, parentId: parentId })));
+                _context2.next = 2;
+                return this._post({ uri: this._baseUrl }, this._createRequestJson({ name: name, parentId: parentId }));
 
-              case 1:
+              case 2:
+                return _context2.abrupt('return', _context2.sent);
+
+              case 3:
               case 'end':
                 return _context2.stop();
             }
@@ -111,9 +119,13 @@ var Project = function (_Client) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                return _context3.abrupt('return', this._put({ uri: this._baseUrl }, data));
+                _context3.next = 2;
+                return this._put({ uri: this._baseUrl }, data);
 
-              case 1:
+              case 2:
+                return _context3.abrupt('return', _context3.sent);
+
+              case 3:
               case 'end':
                 return _context3.stop();
             }
@@ -136,14 +148,18 @@ var Project = function (_Client) {
   }, {
     key: 'delete',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(parent) {
+      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(name) {
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                return _context4.abrupt('return', _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + parent }));
+                _context4.next = 2;
+                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + name });
 
-              case 1:
+              case 2:
+                return _context4.abrupt('return', _context4.sent);
+
+              case 3:
               case 'end':
                 return _context4.stop();
             }

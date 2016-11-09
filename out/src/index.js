@@ -14,16 +14,23 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Connector = function () {
-  function Connector(baseUrl, username, password) {
-    _classCallCheck(this, Connector);
+/**
+ * The Teamcity connector to search teamcity and to create projects
+ * @class
+ */
+var TeamcityConnector = function () {
+  /**
+   * @constructor
+   */
+  function TeamcityConnector(baseUrl, username, password) {
+    _classCallCheck(this, TeamcityConnector);
 
     this._project = new lib.Project(baseUrl, username, password);
     this._buildType = new lib.BuildType(baseUrl, username, password);
     this._vcsRoot = new lib.VcsRoot(baseUrl, username, password);
   }
 
-  _createClass(Connector, [{
+  _createClass(TeamcityConnector, [{
     key: 'Project',
     get: function get() {
       return this._project;
@@ -40,8 +47,8 @@ var Connector = function () {
     }
   }]);
 
-  return Connector;
+  return TeamcityConnector;
 }();
 
-exports.default = Connector;
+exports.default = TeamcityConnector;
 //# sourceMappingURL=index.js.map

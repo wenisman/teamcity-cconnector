@@ -9,36 +9,50 @@ export default class Client {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
+      },
+      json: true,
+      auth: {
+        'user': username,
+        'pass': password,
+        'sendImmediately': true
       }
     };
 
     if (!!username && !!password) {
-      Object.assign(this._options, { auth: { username, password } });
+      Object.assign(this._options, { auth: { user: username, pass: password, sendImmediately: true } });
     }
   }
 
   async _get (options) {
-    options.uri = encodeURI(options.uri);
-    return maybe.fromNullable(await request
-      .get(Object.assign(options, this._options)));
+    return this._executeRequest('get', options);
   }
 
   async _put (options, data) {
-    options.uri = encodeURI(options.uri);
-    options = Object.assign(options, this._options, { json: data });
-    return maybe.fromNullable(await request.put(options));
+    options = Object.assign(options, { body: data });
+    return this._executeRequest('put', options);
   }
 
   async _post (options, data) {
-    options.uri = encodeURI(options.uri);
-    options = Object.assign(options, this._options, { json: data });
-    return maybe.fromNullable(await request.post(options));
+    options = Object.assign(options, { body: data });
+    return this._executeRequest('post', options);
   }
 
   async _delete (options) {
+    return this._executeRequest('delete', options);
+  }
+
+  async _executeRequest (requestName, options) {
+    options = Object.assign(options, this._options);
     options.uri = encodeURI(options.uri);
-    return maybe.fromNullable(await request
-      .delete(Object.assign(options, this._options)));
+    try {
+      return maybe.fromNullable(await request[requestName](options));
+    } catch (e) {
+      if (e.statusCode === 404) {
+        return maybe.Nothing();
+      }
+
+      throw e;
+    }
   }
 }
 

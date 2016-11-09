@@ -6,7 +6,7 @@
       "type": "node",
       "request": "launch",
       "stopOnEntry": false,
-      "cwd": "${workspaceRoot}",
+      "cwd": "${workspaceRoot}/out",
       "preLaunchTask": "buildTests",
       "program": "${workspaceRoot}/node_modules/.bin/_mocha",
       "args": [
@@ -15,8 +15,9 @@
         "-R",
         "spec",
         "-r",
-        "out/test/setup.js",
-        "out/test/*{,*/}*.js"
+        "test/setup.js",
+        "test/*{,*/}*.js",
+        "--debug-brk"
       ],
       "runtimeArgs": [
         "--nolazy",
@@ -27,8 +28,7 @@
         "NODE_ENV": "development"
       },
       "console": "internalConsole",
-      "sourceMaps": true,
-      "outDir": "${workspaceRoot}/out"
+      "sourceMaps": true
     },
     {
       "name": "Debug",

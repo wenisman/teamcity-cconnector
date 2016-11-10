@@ -46,7 +46,7 @@ export default class Project extends Client {
   _createRequestJson (args) {
     var projJson = { name: args.name };
 
-    if (args.parentId) {
+    if (args.parent) {
       projJson.parentProject = {
         locator: `name:${args.parent}`
       };

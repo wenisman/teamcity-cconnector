@@ -14,8 +14,8 @@ export default class TeamcityConnector {
     this._vcsRoot = new lib.VcsRoot(baseUrl, username, password);
   }
 
-  get Project () { return this._project; }
-  get BuildType () { return this._buildType; }
-  get VcsRoot () { return this._vcsRoot; }
+  get project () { return this._project; }
+  get buildtype () { return this._buildType; }
+  get vcsroot () { return this._vcsRoot; }
 }
 

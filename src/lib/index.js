@@ -1,3 +1,3 @@
-export {default as project} from './project';
-export {default as vcsroot} from './vcsroot';
-export {default as buildtype} from './buildtype';
+export {default as Project} from './project';
+export {default as VcsRoot} from './vcsroot';
+export {default as BuildType} from './buildtype';

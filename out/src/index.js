@@ -31,17 +31,17 @@ var TeamcityConnector = function () {
   }
 
   _createClass(TeamcityConnector, [{
-    key: 'Project',
+    key: 'project',
     get: function get() {
       return this._project;
     }
   }, {
-    key: 'BuildType',
+    key: 'buildtype',
     get: function get() {
       return this._buildType;
     }
   }, {
-    key: 'VcsRoot',
+    key: 'vcsroot',
     get: function get() {
       return this._vcsRoot;
     }

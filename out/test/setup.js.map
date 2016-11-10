@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../test/setup.js"],"names":["should"],"mappings":";;AAAA;;AACA;;;;;;AAEA,eAAKA,MAAL","file":"setup.js","sourcesContent":["import 'babel-polyfill';\nimport chai from 'chai';\n\nchai.should();\n"]}

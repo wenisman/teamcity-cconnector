@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _project = require('./project');
 
-Object.defineProperty(exports, 'project', {
+Object.defineProperty(exports, 'Project', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_project).default;
@@ -15,7 +15,7 @@ Object.defineProperty(exports, 'project', {
 
 var _vcsroot = require('./vcsroot');
 
-Object.defineProperty(exports, 'vcsroot', {
+Object.defineProperty(exports, 'VcsRoot', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_vcsroot).default;
@@ -24,7 +24,7 @@ Object.defineProperty(exports, 'vcsroot', {
 
 var _buildtype = require('./buildtype');
 
-Object.defineProperty(exports, 'buildtype', {
+Object.defineProperty(exports, 'BuildType', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_buildtype).default;

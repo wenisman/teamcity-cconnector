@@ -75,19 +75,19 @@ var Project = function (_Client) {
     /**
      * Create a basic project with the name provided
      * @param {string} name - the name of the project to create
-     * @param {string} parentId - the Id of the parent that this project belongs to
+     * @param {string} parent - the name of the parent that this project belongs to
      */
 
   }, {
     key: 'create',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, parentId) {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, parent) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this._post({ uri: this._baseUrl }, this._createRequestJson({ name: name, parentId: parentId }));
+                return this._post({ uri: this._baseUrl }, this._createRequestJson({ name: name, parent: parent }));
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -179,9 +179,9 @@ var Project = function (_Client) {
     value: function _createRequestJson(args) {
       var projJson = { name: args.name };
 
-      if (args.parentId) {
+      if (args.parent) {
         projJson.parentProject = {
-          id: args.parentId
+          locator: 'name:' + args.parent
         };
       }
 

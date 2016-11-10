@@ -1,4 +1,4 @@
-import * as lib from 'lib';
+import * as lib from './lib';
 
 /**
  * The Teamcity connector to search teamcity and to create projects

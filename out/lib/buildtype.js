@@ -76,20 +76,20 @@ var BuildType = function (_Client) {
     /**
      * Create the request to send to teamcity
      * @param {string} args.name - the name of the buildType to create
-     * @param {string} args.projectId - the id of the project the buildType will belong to
+     * @param {string} args.project - the name of the project the buildType will belong to
      * @param {string} args.template - the id of the template to use for the buildType
      */
 
   }, {
     key: 'create',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, projectId, template) {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, project, template) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this._post({ uri: this._buildTypesUrl }, this._createRequestJson({ name: name, projectId: projectId, template: template }));
+                return this._post({ uri: this._createBuildTypesUrl(project) }, this._createRequestJson({ name: name, template: template }));
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -117,8 +117,7 @@ var BuildType = function (_Client) {
     key: '_createRequestJson',
     value: function _createRequestJson(args) {
       var request = {
-        name: args.name,
-        projectId: args.projectId
+        name: args.name
       };
 
       if (args.template) {

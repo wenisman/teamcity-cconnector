@@ -22,11 +22,11 @@ export default class BuildType extends Client {
   /**
    * Create the request to send to teamcity
    * @param {string} args.name - the name of the buildType to create
-   * @param {string} args.projectId - the id of the project the buildType will belong to
+   * @param {string} args.project - the name of the project the buildType will belong to
    * @param {string} args.template - the id of the template to use for the buildType
    */
-  async create (name, projectId, template) {
-    return await this._post({ uri: this._buildTypesUrl }, this._createRequestJson({name, projectId, template}));
+  async create (name, project, template) {
+    return await this._post({ uri: this._createBuildTypesUrl(project) }, this._createRequestJson({name, template}));
   }
 
   _createBuildTypesUrl (project) {
@@ -35,8 +35,7 @@ export default class BuildType extends Client {
 
   _createRequestJson (args) {
     var request = {
-      name: args.name,
-      projectId: args.projectId
+      name: args.name
     };
 
     if (args.template) {

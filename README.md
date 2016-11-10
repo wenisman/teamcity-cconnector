@@ -22,7 +22,7 @@ let projectDetails = connector.Project().get('Project Name');
 To create a project you just need the name of the project to create and the id of the parent project. If this is a new 
 project created from scratch you do not need to provide a parent project anf the new project will be placed under the root.
 ``` javascript
-let result = connector.Project().create('My Subproject', 'ParentProjectId');
+let result = connector.Project().create('My Subproject', 'Parent Project Name');
 ```
 
 

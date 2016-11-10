@@ -21,10 +21,10 @@ export default class Project extends Client {
   /**
    * Create a basic project with the name provided
    * @param {string} name - the name of the project to create
-   * @param {string} parentId - the Id of the parent that this project belongs to
+   * @param {string} parent - the name of the parent that this project belongs to
    */
-  async create (name, parentId) {
-    return await this._post({ uri: this._baseUrl }, this._createRequestJson({name, parentId}));
+  async create (name, parent) {
+    return await this._post({ uri: this._baseUrl }, this._createRequestJson({name, parent}));
   }
 
   /**
@@ -48,7 +48,7 @@ export default class Project extends Client {
 
     if (args.parentId) {
       projJson.parentProject = {
-        id: args.parentId
+        locator: `name:${args.parent}`
       };
     }
 

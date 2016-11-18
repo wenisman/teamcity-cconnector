@@ -1,7 +1,7 @@
 import BuildType from '../src/lib/buildtype';
 import Project from '../src/lib/project';
 
-describe('buildType tests', () => {
+describe.only('buildType tests', () => {
   let bt, proj;
 
   before(async () => {
@@ -24,7 +24,7 @@ describe('buildType tests', () => {
   it('should create a buildType', async () => {
     const build = await bt.get({name: 'test build', project: 'Child'});
     if (build.isNothing) {
-      const output = await bt.create({name: 'test build', parent: 'Parent_Child', template: 'Default_DotNet_BuildTest'});
+      const output = await bt.create({name: 'test build', projectId: 'Parent_Child', template: 'Default_DotNet_BuildTest'});
       console.log(output);
     }
   });

@@ -76,7 +76,8 @@ var BuildType = function (_Client) {
     /**
      * Create the request to send to teamcity
      * @param {string} args.name - the name of the buildType to create
-     * @param {string} args.project - the name of the project the buildType will belong to
+     * @param {string} args.projectId - the name of the project the buildType will belong to
+     * @param {string} args.projectName - the name of the project to place the buildtype in
      * @param {string} args.template - the id of the template to use for the buildType
      */
 
@@ -89,7 +90,7 @@ var BuildType = function (_Client) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this._post({ uri: this._createBuildTypesUrl(args.project) }, this._createRequestJson({ name: args.name, template: args.template }));
+                return this._post({ uri: this._buildTypesUrl }, this._createRequestJson(args));
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -120,12 +121,20 @@ var BuildType = function (_Client) {
         name: args.name
       };
 
+      request.project = {};
+      if (args.projectId) {
+        request.project.id = args.projectId;
+      } else {
+        request.project.locator = 'name:' + args.projectName;
+      }
+
       if (args.template) {
         request.template = {
           id: args.template
         };
       }
 
+      console.log('bt request', request);
       return request;
     }
   }]);

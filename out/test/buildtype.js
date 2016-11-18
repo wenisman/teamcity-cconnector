@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-describe('buildType tests', function () {
+describe.only('buildType tests', function () {
   var bt = void 0,
       proj = void 0;
 
@@ -69,10 +69,6 @@ describe('buildType tests', function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.next = 2;
-            return proj.delete({ name: 'Parent' });
-
-          case 2:
           case 'end':
             return _context3.stop();
         }
@@ -92,20 +88,23 @@ describe('buildType tests', function () {
           case 2:
             build = _context4.sent;
 
+            console.log('build', build.getOrElse('nothing'));
+
             if (!build.isNothing) {
-              _context4.next = 8;
+              _context4.next = 10;
               break;
             }
 
-            _context4.next = 6;
-            return bt.create({ name: 'test build', parent: 'Parent_Child', template: 'Default_DotNet_BuildTest' });
+            console.log('creating buld type');
+            _context4.next = 8;
+            return bt.create({ name: 'test build', projectId: 'Parent_Child', template: 'Default_DotNet_BuildTest' });
 
-          case 6:
+          case 8:
             output = _context4.sent;
 
             console.log(output);
 
-          case 8:
+          case 10:
           case 'end':
             return _context4.stop();
         }

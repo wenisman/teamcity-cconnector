@@ -32,14 +32,17 @@ The buildTypes are the definitions used when creating a TeamcityBuild, you will 
 ###Get A BuildType
 To locate a BuildType you will need to know its name and the name of the project that it belongs to 
 ``` javascript
-let buildTypeDetail = connector.buildtype.get({name: 'BuildType Name', parent: 'Project Name'});
+let buildTypeDetail = connector.buildtype.get({name: 'BuildType Name', project: 'Project Name'});
 ```
 
 ###Create a new BuildType
 Creating a basic BuildType can be done manually or you can use a template, to use the template just provide the
 Id of the template you wish to use.  If you leave the template Id empty then no template will be used
+you can substitute the project name for projectId
 ``` javascript
-let result = connector.buildtype.create({name: 'My Buildtype', parent: 'Project Name', template: 'TemplateId'});
+let result = connector.buildtype.create({name: 'My Buildtype', projectName: 'Project Name', template: 'TemplateId'});
+
+let result = connector.buildtype.create({name: 'My Buildtype', projectId: 'Project_Id', template: 'TemplateId'});
 ```
 
 

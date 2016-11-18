@@ -21,8 +21,8 @@ describe('VcsRoot tests', function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            proj = new _project2.default('http://192.168.99.100:8111', 'testusr', 'testpwd');
-            vcs = new _vcsroot2.default('http://192.168.99.100:8111', 'testusr', 'testpwd');
+            proj = new _project2.default('http://localhost:8111', 'testusr', 'testpwd');
+            vcs = new _vcsroot2.default('http://localhost:8111', 'testusr', 'testpwd');
 
           case 2:
           case 'end':
@@ -39,7 +39,7 @@ describe('VcsRoot tests', function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return proj.get('Parent');
+            return proj.get({ name: 'Parent' });
 
           case 2:
             existing = _context2.sent;
@@ -50,11 +50,11 @@ describe('VcsRoot tests', function () {
             }
 
             _context2.next = 6;
-            return proj.create('Parent');
+            return proj.create({ name: 'Parent' });
 
           case 6:
             _context2.next = 8;
-            return proj.create('Child', 'Parent');
+            return proj.create({ name: 'Child', parent: 'Parent' });
 
           case 8:
           case 'end':
@@ -70,11 +70,11 @@ describe('VcsRoot tests', function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return proj.delete('Parent');
+            return proj.delete({ name: 'Parent' });
 
           case 2:
             _context3.next = 4;
-            return vcs.delete('Test Vcs Root');
+            return vcs.delete({ name: 'Test Vcs Root' });
 
           case 4:
           case 'end':

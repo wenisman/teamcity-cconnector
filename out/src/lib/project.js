@@ -46,13 +46,13 @@ var Project = function (_Client) {
   _createClass(Project, [{
     key: 'get',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(name) {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(args) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + name });
+                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + args.name });
 
               case 2:
                 return _context.abrupt('return', _context.sent);
@@ -74,20 +74,20 @@ var Project = function (_Client) {
 
     /**
      * Create a basic project with the name provided
-     * @param {string} name - the name of the project to create
-     * @param {string} parent - the name of the parent that this project belongs to
+     * @param {string} args.name - the name of the project to create
+     * @param {string} args.parent - the name of the parent that this project belongs to
      */
 
   }, {
     key: 'create',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, parent) {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(args) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this._post({ uri: this._baseUrl }, this._createRequestJson({ name: name, parent: parent }));
+                return this._post({ uri: this._baseUrl }, this._createRequestJson(args));
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -100,7 +100,7 @@ var Project = function (_Client) {
         }, _callee2, this);
       }));
 
-      function create(_x2, _x3) {
+      function create(_x2) {
         return _ref2.apply(this, arguments);
       }
 
@@ -134,7 +134,7 @@ var Project = function (_Client) {
         }, _callee3, this);
       }));
 
-      function update(_x4) {
+      function update(_x3) {
         return _ref3.apply(this, arguments);
       }
 
@@ -149,13 +149,13 @@ var Project = function (_Client) {
   }, {
     key: 'delete',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(name) {
+      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(args) {
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + name });
+                return _get(Project.prototype.__proto__ || Object.getPrototypeOf(Project.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + args.name });
 
               case 2:
                 return _context4.abrupt('return', _context4.sent);
@@ -168,7 +168,7 @@ var Project = function (_Client) {
         }, _callee4, this);
       }));
 
-      function _delete(_x5) {
+      function _delete(_x4) {
         return _ref4.apply(this, arguments);
       }
 

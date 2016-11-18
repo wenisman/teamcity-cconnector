@@ -12,10 +12,10 @@ export default class VcsRoot extends Client {
 
   /**
    * Get the vcs root that matches the name provided
-   * @param {string} name - the name of the vcs root to look for
+   * @param {string} args.name - the name of the vcs root to look for
    */
-  async get (name) {
-    return await super._get({ uri: `${this._baseUrl}name:${name}` });
+  async get (args) {
+    return await super._get({ uri: `${this._baseUrl}name:${args.name}` });
   }
 
   /**
@@ -31,8 +31,8 @@ export default class VcsRoot extends Client {
     return await super._post({ uri: this._baseUrl }, this._createRequestJson(options));
   }
 
-  async delete (name) {
-    return await super._delete({ uri: `${this._baseUrl}name:${name}` });
+  async delete (args) {
+    return await super._delete({ uri: `${this._baseUrl}name:${args.name}` });
   }
 
   _createRequestJson (args) {

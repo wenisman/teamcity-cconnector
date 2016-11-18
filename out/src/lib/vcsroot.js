@@ -39,20 +39,20 @@ var VcsRoot = function (_Client) {
 
   /**
    * Get the vcs root that matches the name provided
-   * @param {string} name - the name of the vcs root to look for
+   * @param {string} args.name - the name of the vcs root to look for
    */
 
 
   _createClass(VcsRoot, [{
     key: 'get',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(name) {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(args) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + name });
+                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_get', this).call(this, { uri: this._baseUrl + 'name:' + args.name });
 
               case 2:
                 return _context.abrupt('return', _context.sent);
@@ -113,13 +113,13 @@ var VcsRoot = function (_Client) {
   }, {
     key: 'delete',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(name) {
+      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(args) {
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + name });
+                return _get(VcsRoot.prototype.__proto__ || Object.getPrototypeOf(VcsRoot.prototype), '_delete', this).call(this, { uri: this._baseUrl + 'name:' + args.name });
 
               case 2:
                 return _context3.abrupt('return', _context3.sent);

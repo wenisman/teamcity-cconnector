@@ -4,24 +4,24 @@ describe('project library', () => {
   let proj = null;
 
   before(() => {
-    proj = new Project('http://192.168.99.100:8111', 'testusr', 'testpwd');
+    proj = new Project('http://localhost:8111', 'testusr', 'testpwd');
   });
 
   beforeEach(async () => {
-    const existing = await proj.get('Parent');
+    const existing = await proj.get({name: 'Parent'});
     if (existing.isNothing) {
-      await proj.create('Parent');
-      await proj.create('Child', 'Parent');
+      await proj.create({name: 'Parent'});
+      await proj.create({name: 'Child', parent: 'Parent'});
     }
   });
 
   afterEach('should delete a project', async () => {
-    await proj.delete('Parent');
+    await proj.delete({name: 'Parent'});
   });
 
   it('should get a project', async () => {
     for (let projectName of ['Parent', 'Child']) {
-      const result = await proj.get(projectName);
+      const result = await proj.get({name: projectName});
       const projectInfo = result.getOrElse(false);
       projectInfo.name.should.equal(projectName);
     }

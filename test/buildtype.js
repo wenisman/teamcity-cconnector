@@ -5,26 +5,26 @@ describe('buildType tests', () => {
   let bt, proj;
 
   before(async () => {
-    proj = new Project('http://192.168.99.100:8111', 'testusr', 'testpwd');
-    bt = new BuildType('http://192.168.99.100:8111', 'testusr', 'testpwd');
+    proj = new Project('http://localhost:8111', 'testusr', 'testpwd');
+    bt = new BuildType('http://localhost:8111', 'testusr', 'testpwd');
   });
 
   beforeEach(async () => {
-    const existing = await proj.get('Parent');
+    const existing = await proj.get({name: 'Parent'});
     if (existing.isNothing) {
-      await proj.create('Parent');
-      await proj.create('Child', 'Parent');
+      await proj.create({name: 'Parent'});
+      await proj.create({name: 'Child', parent: 'Parent'});
     }
   });
 
   afterEach('should delete a project', async () => {
-    await proj.delete('Parent');
+    await proj.delete({name: 'Parent'});
   });
 
   it('should create a buildType', async () => {
-    const build = await bt.get('test build', 'Child');
+    const build = await bt.get({name: 'test build', project: 'Child'});
     if (build.isNothing) {
-      const output = await bt.create('test build', 'Parent_Child', 'NetBuildTest');
+      const output = await bt.create({name: 'test build', parent: 'Parent_Child', template: 'Default_DotNet_BuildTest'});
       console.log(output);
     }
   });

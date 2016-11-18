@@ -39,21 +39,21 @@ var BuildType = function (_Client) {
 
   /**
    * Get the buildType that matches the name provided
-   * @param {string} name - the name of the buildType to look for
-   * @param {string} project - the name of the parent project for the buildType
+   * @param {string} args.name - the name of the buildType to look for
+   * @param {string} args.project - the name of the parent project for the buildType
    */
 
 
   _createClass(BuildType, [{
     key: 'get',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(name, project) {
+      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(args) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _get(BuildType.prototype.__proto__ || Object.getPrototypeOf(BuildType.prototype), '_get', this).call(this, { uri: this._createBuildTypesUrl(project) + 'name:' + name });
+                return _get(BuildType.prototype.__proto__ || Object.getPrototypeOf(BuildType.prototype), '_get', this).call(this, { uri: this._createBuildTypesUrl(args.project) + 'name:' + args.name });
 
               case 2:
                 return _context.abrupt('return', _context.sent);
@@ -66,7 +66,7 @@ var BuildType = function (_Client) {
         }, _callee, this);
       }));
 
-      function get(_x, _x2) {
+      function get(_x) {
         return _ref.apply(this, arguments);
       }
 
@@ -83,13 +83,13 @@ var BuildType = function (_Client) {
   }, {
     key: 'create',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(name, project, template) {
+      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(args) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this._post({ uri: this._createBuildTypesUrl(project) }, this._createRequestJson({ name: name, template: template }));
+                return this._post({ uri: this._createBuildTypesUrl(args.project) }, this._createRequestJson({ name: args.name, template: args.template }));
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -102,7 +102,7 @@ var BuildType = function (_Client) {
         }, _callee2, this);
       }));
 
-      function create(_x3, _x4, _x5) {
+      function create(_x2) {
         return _ref2.apply(this, arguments);
       }
 

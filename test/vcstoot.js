@@ -5,21 +5,21 @@ describe('VcsRoot tests', () => {
   let vcs, proj;
 
   before(async () => {
-    proj = new Project('http://192.168.99.100:8111', 'testusr', 'testpwd');
-    vcs = new VcsRoot('http://192.168.99.100:8111', 'testusr', 'testpwd');
+    proj = new Project('http://localhost:8111', 'testusr', 'testpwd');
+    vcs = new VcsRoot('http://localhost:8111', 'testusr', 'testpwd');
   });
 
   beforeEach(async () => {
-    const existing = await proj.get('Parent');
+    const existing = await proj.get({name: 'Parent'});
     if (existing.isNothing) {
-      await proj.create('Parent');
-      await proj.create('Child', 'Parent');
+      await proj.create({name: 'Parent'});
+      await proj.create({name: 'Child', parent: 'Parent'});
     }
   });
 
   afterEach('should delete a project', async () => {
-    await proj.delete('Parent');
-    await vcs.delete('Test Vcs Root');
+    await proj.delete({name: 'Parent'});
+    await vcs.delete({name: 'Test Vcs Root'});
   });
 
   it('should create a vcsroot', async () => {

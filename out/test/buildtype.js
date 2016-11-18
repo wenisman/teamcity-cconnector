@@ -21,8 +21,8 @@ describe('buildType tests', function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            proj = new _project2.default('http://192.168.99.100:8111', 'testusr', 'testpwd');
-            bt = new _buildtype2.default('http://192.168.99.100:8111', 'testusr', 'testpwd');
+            proj = new _project2.default('http://localhost:8111', 'testusr', 'testpwd');
+            bt = new _buildtype2.default('http://localhost:8111', 'testusr', 'testpwd');
 
           case 2:
           case 'end':
@@ -39,7 +39,7 @@ describe('buildType tests', function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return proj.get('Parent');
+            return proj.get({ name: 'Parent' });
 
           case 2:
             existing = _context2.sent;
@@ -50,11 +50,11 @@ describe('buildType tests', function () {
             }
 
             _context2.next = 6;
-            return proj.create('Parent');
+            return proj.create({ name: 'Parent' });
 
           case 6:
             _context2.next = 8;
-            return proj.create('Child', 'Parent');
+            return proj.create({ name: 'Child', parent: 'Parent' });
 
           case 8:
           case 'end':
@@ -70,7 +70,7 @@ describe('buildType tests', function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return proj.delete('Parent');
+            return proj.delete({ name: 'Parent' });
 
           case 2:
           case 'end':
@@ -87,7 +87,7 @@ describe('buildType tests', function () {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.next = 2;
-            return bt.get('test build', 'Child');
+            return bt.get({ name: 'test build', project: 'Child' });
 
           case 2:
             build = _context4.sent;
@@ -98,7 +98,7 @@ describe('buildType tests', function () {
             }
 
             _context4.next = 6;
-            return bt.create('test build', 'Parent_Child', 'NetBuildTest');
+            return bt.create({ name: 'test build', parent: 'Parent_Child', template: 'Default_DotNet_BuildTest' });
 
           case 6:
             output = _context4.sent;

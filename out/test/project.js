@@ -12,7 +12,7 @@ describe('project library', function () {
   var proj = null;
 
   before(function () {
-    proj = new _project2.default('http://192.168.99.100:8111', 'testusr', 'testpwd');
+    proj = new _project2.default('http://localhost:8111', 'testusr', 'testpwd');
   });
 
   beforeEach(_asyncToGenerator(regeneratorRuntime.mark(function _callee() {
@@ -22,7 +22,7 @@ describe('project library', function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return proj.get('Parent');
+            return proj.get({ name: 'Parent' });
 
           case 2:
             existing = _context.sent;
@@ -33,11 +33,11 @@ describe('project library', function () {
             }
 
             _context.next = 6;
-            return proj.create('Parent');
+            return proj.create({ name: 'Parent' });
 
           case 6:
             _context.next = 8;
-            return proj.create('Child', 'Parent');
+            return proj.create({ name: 'Child', parent: 'Parent' });
 
           case 8:
           case 'end':
@@ -53,7 +53,7 @@ describe('project library', function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return proj.delete('Parent');
+            return proj.delete({ name: 'Parent' });
 
           case 2:
           case 'end':
@@ -81,7 +81,7 @@ describe('project library', function () {
 
             projectName = _arr[_i];
             _context3.next = 6;
-            return proj.get(projectName);
+            return proj.get({ name: projectName });
 
           case 6:
             result = _context3.sent;

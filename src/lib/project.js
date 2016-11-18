@@ -14,17 +14,17 @@ export default class Project extends Client {
    * Get the project that matches the name provided
    * @param {string} name - the name of the project
    */
-  async get (name) {
-    return await super._get({ uri: `${this._baseUrl}name:${name}` });
+  async get (args) {
+    return await super._get({ uri: `${this._baseUrl}name:${args.name}` });
   }
 
   /**
    * Create a basic project with the name provided
-   * @param {string} name - the name of the project to create
-   * @param {string} parent - the name of the parent that this project belongs to
+   * @param {string} args.name - the name of the project to create
+   * @param {string} args.parent - the name of the parent that this project belongs to
    */
-  async create (name, parent) {
-    return await this._post({ uri: this._baseUrl }, this._createRequestJson({name, parent}));
+  async create (args) {
+    return await this._post({ uri: this._baseUrl }, this._createRequestJson(args));
   }
 
   /**
@@ -39,8 +39,8 @@ export default class Project extends Client {
    * Delete the project with the provided name
    * @param {string} name - the name of the project to delete
    */
-  async delete (name) {
-    return await super._delete({ uri: `${this._baseUrl}name:${name}` });
+  async delete (args) {
+    return await super._delete({ uri: `${this._baseUrl}name:${args.name}` });
   }
 
   _createRequestJson (args) {

@@ -1,7 +1,7 @@
 import BuildType from '../src/lib/buildtype';
 import Project from '../src/lib/project';
 
-describe.only('buildType tests', () => {
+describe('buildType tests', () => {
   let bt, proj;
 
   before(async () => {

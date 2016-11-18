@@ -52,7 +52,6 @@ export default class BuildType extends Client {
       };
     }
 
-    console.log('bt request', request);
     return request;
   }
 }

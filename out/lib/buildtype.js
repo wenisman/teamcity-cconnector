@@ -134,7 +134,6 @@ var BuildType = function (_Client) {
         };
       }
 
-      console.log('bt request', request);
       return request;
     }
   }]);

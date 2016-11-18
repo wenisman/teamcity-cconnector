@@ -15,14 +15,14 @@ All project work is located under the Project property of the TeamcityConnector
 ###Get a project
 To retrieve an existing project you can search for the project by name
 ``` javascript
-let projectDetails = connector.project.get('Project Name');
+let projectDetails = connector.project.get({name: 'Project Name'});
 ```
 
 ###Create a Project
 To create a project you just need the name of the project to create and the id of the parent project. If this is a new 
 project created from scratch you do not need to provide a parent project anf the new project will be placed under the root.
 ``` javascript
-let result = connector.project.create('My Subproject', 'Parent Project Name');
+let result = connector.project.create({name: 'My Subproject', parent: 'Parent Project Name'});
 ```
 
 
@@ -32,14 +32,14 @@ The buildTypes are the definitions used when creating a TeamcityBuild, you will 
 ###Get A BuildType
 To locate a BuildType you will need to know its name and the name of the project that it belongs to 
 ``` javascript
-let buildTypeDetail = connector.buildtype.get('BuildType Name', 'Project Name');
+let buildTypeDetail = connector.buildtype.get({name: 'BuildType Name', parent: 'Project Name'});
 ```
 
 ###Create a new BuildType
 Creating a basic BuildType can be done manually or you can use a template, to use the template just provide the
 Id of the template you wish to use.  If you leave the template Id empty then no template will be used
 ``` javascript
-let result = connector.buildtype.create('My Buildtype', 'Project Name', 'TemplateId');
+let result = connector.buildtype.create({name: 'My Buildtype', parent: 'Project Name', template: 'TemplateId'});
 ```
 
 
@@ -47,7 +47,7 @@ let result = connector.buildtype.create('My Buildtype', 'Project Name', 'Templat
 All builds needs to get their source form somewhere, so provide an VcsRoot
 ###Get an existing VcsRoot
 ``` javascript
-let vcsrootDetail = connector.VcsRoot().get('VcsRoot name');
+let vcsrootDetail = connector.VcsRoot().get({name: 'VcsRoot name'});
 ```
 
 ###Create a VcsRoot

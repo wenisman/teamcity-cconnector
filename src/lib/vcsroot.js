@@ -44,7 +44,6 @@ export default class VcsRoot extends Client {
   async addProperties (args) {
     const vcsRoot = await this.get({ name: args.vcsRootName });
     if (!vcsRoot.isNothing) {
-      console.log(vcsRoot.get());
       const existingProperties = R.differenceWith((x, y) => { x.name === y.name; },
         vcsRoot.get().properties.property,
         args.properties);

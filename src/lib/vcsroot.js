@@ -43,11 +43,12 @@ export default class VcsRoot extends Client {
    */
   async addProperties (args) {
     const vcsRoot = await this.get({ name: args.vcsRootName });
-
     if (!vcsRoot.isNothing) {
-      const newProperties = args.properties;
-      const existingProperties = R.differenceWith((x, y) => { x.name === y.name; }, vcsRoot.get().properties, newProperties);
-      const properties = existingProperties.concat(newProperties);
+      console.log(vcsRoot.get());
+      const existingProperties = R.differenceWith((x, y) => { x.name === y.name; },
+        vcsRoot.get().properties.property,
+        args.properties);
+      const properties = existingProperties.concat(args.properties);
 
       return await this._put({uri: `${this._baseUrl}name:${args.vcsRootName}/properties`}, { property: properties });
     }

@@ -1,7 +1,7 @@
 import VcsRoot from '../src/lib/vcsroot';
 import Project from '../src/lib/project';
 
-describe('VcsRoot tests', () => {
+describe.only('VcsRoot tests', () => {
   let vcs, proj;
 
   before(async () => {
@@ -17,9 +17,9 @@ describe('VcsRoot tests', () => {
     }
   });
 
-  afterEach('should delete a project', async () => {
-    await proj.delete({name: 'Parent'});
-    await vcs.delete({name: 'Test Vcs Root'});
+  after('should delete a project', async () => {
+    //await proj.delete({name: 'Parent'});
+    //await vcs.delete({name: 'Test Vcs Root'});
   });
 
   it('should create a vcsroot', async () => {

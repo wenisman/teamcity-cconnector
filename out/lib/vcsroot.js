@@ -145,8 +145,8 @@ var VcsRoot = function (_Client) {
 
     /**
      * @param {string} args.vcsRootName - the name of the vcsroot
-     * @param {object} args.properties - (Required) the object defining the properties to be set
-     *                                   {name1: value1, name2: value2}
+     * @param {array} args.properties - (Required) the object defining the properties to be set
+     *                                  [{name: name1, value: value1}]
      */
 
   }, {
@@ -169,7 +169,7 @@ var VcsRoot = function (_Client) {
                   break;
                 }
 
-                newProperties = this._createPropertyRequests(args);
+                newProperties = args.properties;
                 existingProperties = _ramda2.default.differenceWith(function (x, y) {
                   x.name === y.name;
                 }, vcsRoot.get().properties, newProperties);
@@ -211,16 +211,6 @@ var VcsRoot = function (_Client) {
       }
 
       return request;
-    }
-  }, {
-    key: '_createPropertyRequests',
-    value: function _createPropertyRequests(args) {
-      var properties = [];
-      for (var property in args.properties) {
-        properties.push({ name: property, value: args.properties[property] });
-      }
-
-      return properties;
     }
   }]);
 

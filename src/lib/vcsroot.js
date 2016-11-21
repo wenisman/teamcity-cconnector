@@ -38,14 +38,14 @@ export default class VcsRoot extends Client {
 
   /**
    * @param {string} args.vcsRootName - the name of the vcsroot
-   * @param {object} args.properties - (Required) the object defining the properties to be set
-   *                                   {name1: value1, name2: value2}
+   * @param {array} args.properties - (Required) the object defining the properties to be set
+   *                                  [{name: name1, value: value1}]
    */
   async addProperties (args) {
     const vcsRoot = await this.get({ name: args.vcsRootName });
 
     if (!vcsRoot.isNothing) {
-      const newProperties = this._createPropertyRequests(args);
+      const newProperties = args.properties;
       const existingProperties = R.differenceWith((x, y) => { x.name === y.name; }, vcsRoot.get().properties, newProperties);
       const properties = existingProperties.concat(newProperties);
 
@@ -72,14 +72,5 @@ export default class VcsRoot extends Client {
     }
 
     return request;
-  }
-
-  _createPropertyRequests (args) {
-    let properties = [];
-    for (let property in args.properties) {
-      properties.push({name: property, value: args.properties[property]});
-    }
-
-    return properties;
   }
 }

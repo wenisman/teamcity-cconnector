@@ -50,10 +50,10 @@ When you have created your BuildType you will want to amend the Parameters for y
 ``` javascript
 let result = connector.buildtype.addParameters({
   buildTypeId: 'build_type_id',
-  parameters: {
-    parameter1: value1,
-    parameter2: value2
-  }
+  parameters: [
+    { name: parameter1, value: value1 },
+    { name: parameter2: value: value2 }
+  ]
 })
 ```
 
@@ -83,9 +83,10 @@ When you have created your Vcs Root you will want to amend the Properties
 ``` javascript
 let result = connector.vcsroot.addProperties({
   name: 'VcsRoot Name',
-  properties: {
-    property1: value1
-  }
+  properties: [
+    { name: property1, value: value1 },
+    { name: property2: value: value2 }
+  ]
 })
 ```
 

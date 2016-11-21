@@ -30,12 +30,16 @@ describe('buildType tests', () => {
   });
 
   it('should create the parameters', async () => {
-    const build = await bt.get({name: 'test build', project: 'Child'});
+    let build = await bt.get({name: 'test build', project: 'Child'});
+    if (build.isNothing) {
+      build = await bt.create({name: 'test build', projectId: 'Parent_Child', template: 'Default_DotNet_BuildTest'});
+    }
+
     await bt.addParameters({
       buildTypeId: build.get().id,
-      parameters: {
-        ExcludedCategories: 'newValue'
-      }
+      parameters: [
+        { name: 'ExcludedCategories', value: 'newValue' }
+      ]
     });
   });
 });

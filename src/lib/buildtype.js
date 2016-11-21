@@ -34,8 +34,8 @@ export default class BuildType extends Client {
   /**
    * create the parameters on the specified build type
    * @param {string} args.buildTypeId - the id of the build type of create the parameters on
-   * @param {object} args.parameters - the object setting the value of the paramters by name
-   *                                   {name1: value1, name2: value2}
+   * @param {array} args.parameters - the object setting the value of the paramters by name
+   *                                   {name: name1, value: value1}
    */
   async addParameters (args) {
     return await Promise.all(this._createParameterRequests(args));
@@ -67,10 +67,10 @@ export default class BuildType extends Client {
 
   async _createParameterRequests (args) {
     let requests = [];
-    for (let parameter in args.parameters) {
-      let uri = `${this._buildTypesUrl}id:${args.buildTypeId}/parameters/${parameter}`;
-      requests.push(this._put({uri: uri}, { value: args.parameters[parameter] }));
-    }
+    args.parameters.forEach((parameter) => {
+      let uri = `${this._buildTypesUrl}id:${args.buildTypeId}/parameters/${parameter.name}`;
+      requests.push(this._put({uri: uri}, { value: parameter.value }));
+    });
     return requests;
   }
 }

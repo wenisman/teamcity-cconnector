@@ -40,10 +40,10 @@ describe('VcsRoot tests', () => {
   it('should set the properties', async () => {
     await vcs.addProperties({
       vcsRootName: 'Test Vcs Root',
-      properties: {
-        teamcitySshKey: 'test_account_key',
-        authMethod: 'TEAMCITY_SSH_KEY'
-      }
+      properties: [
+        { name: 'teamcitySshKey', value: 'test_account_key' },
+        { name: 'authMethod', value: 'TEAMCITY_SSH_KEY' }
+      ]
     });
   });
 });

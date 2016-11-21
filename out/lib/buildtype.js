@@ -117,8 +117,8 @@ var BuildType = function (_Client) {
     /**
      * create the parameters on the specified build type
      * @param {string} args.buildTypeId - the id of the build type of create the parameters on
-     * @param {object} args.parameters - the object setting the value of the paramters by name
-     *                                   {name1: value1, name2: value2}
+     * @param {array} args.parameters - the object setting the value of the paramters by name
+     *                                   {name: name1, value: value1}
      */
 
   }, {
@@ -177,18 +177,19 @@ var BuildType = function (_Client) {
     key: '_createParameterRequests',
     value: function () {
       var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(args) {
-        var requests, parameter, uri;
+        var _this2 = this;
+
+        var requests;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 requests = [];
 
-                for (parameter in args.parameters) {
-                  uri = this._buildTypesUrl + 'id:' + args.buildTypeId + '/parameters/' + parameter;
-
-                  requests.push(this._put({ uri: uri }, { value: args.parameters[parameter] }));
-                }
+                args.parameters.forEach(function (parameter) {
+                  var uri = _this2._buildTypesUrl + 'id:' + args.buildTypeId + '/parameters/' + parameter.name;
+                  requests.push(_this2._put({ uri: uri }, { value: parameter.value }));
+                });
                 return _context4.abrupt('return', requests);
 
               case 3:

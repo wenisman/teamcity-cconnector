@@ -12,9 +12,13 @@ var _client = require('./client');
 
 var _client2 = _interopRequireDefault(_client);
 
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new _bluebird2.default(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return _bluebird2.default.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -109,6 +113,42 @@ var BuildType = function (_Client) {
 
       return create;
     }()
+
+    /**
+     * create the parameters on the specified build type
+     * @param {string} args.buildTypeId - the id of the build type of create the parameters on
+     * @param {object} args.parameters - the object setting the value of the paramters by name
+     *                                   {name1: value1, name2: value2}
+     */
+
+  }, {
+    key: 'addParameters',
+    value: function () {
+      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(args) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _bluebird2.default.all(this._createParameterRequests(args));
+
+              case 2:
+                return _context3.abrupt('return', _context3.sent);
+
+              case 3:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function addParameters(_x3) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return addParameters;
+    }()
   }, {
     key: '_createBuildTypesUrl',
     value: function _createBuildTypesUrl(project) {
@@ -121,12 +161,9 @@ var BuildType = function (_Client) {
         name: args.name
       };
 
-      request.project = {};
-      if (args.projectId) {
-        request.project.id = args.projectId;
-      } else {
-        request.project.locator = 'name:' + args.projectName;
-      }
+      request.project = {
+        locator: args.projectName ? 'name:' + args.projectName : 'id:' + args.projectId
+      };
 
       if (args.template) {
         request.template = {
@@ -136,6 +173,38 @@ var BuildType = function (_Client) {
 
       return request;
     }
+  }, {
+    key: '_createParameterRequests',
+    value: function () {
+      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(args) {
+        var requests, parameter, uri;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                requests = [];
+
+                for (parameter in args.parameters) {
+                  uri = this._buildTypesUrl + 'id:' + args.buildTypeId + '/parameters/' + parameter;
+
+                  requests.push(this._put({ uri: uri }, { value: args.parameters[parameter] }));
+                }
+                return _context4.abrupt('return', requests);
+
+              case 3:
+              case 'end':
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function _createParameterRequests(_x4) {
+        return _ref4.apply(this, arguments);
+      }
+
+      return _createParameterRequests;
+    }()
   }]);
 
   return BuildType;

@@ -1,7 +1,6 @@
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import chai from 'chai';
-import maybe from 'data.maybe';
 
 describe('base client tests', () => {
   let client, request, spy;

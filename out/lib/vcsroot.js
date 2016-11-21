@@ -12,6 +12,10 @@ var _client = require('./client');
 
 var _client2 = _interopRequireDefault(_client);
 
+var _ramda = require('ramda');
+
+var _ramda2 = _interopRequireDefault(_ramda);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -138,6 +142,58 @@ var VcsRoot = function (_Client) {
 
       return _delete;
     }()
+
+    /**
+     * @param {string} args.vcsRootName - the name of the vcsroot
+     * @param {object} args.properties - (Required) the object defining the properties to be set
+     *                                   {name1: value1, name2: value2}
+     */
+
+  }, {
+    key: 'addProperties',
+    value: function () {
+      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(args) {
+        var vcsRoot, newProperties, existingProperties, properties;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.get({ name: args.vcsRootName });
+
+              case 2:
+                vcsRoot = _context4.sent;
+
+                if (vcsRoot.isNothing) {
+                  _context4.next = 10;
+                  break;
+                }
+
+                newProperties = this._createPropertyRequests(args);
+                existingProperties = _ramda2.default.differenceWith(function (x, y) {
+                  x.name === y.name;
+                }, vcsRoot.get().properties, newProperties);
+                properties = existingProperties.concat(newProperties);
+                _context4.next = 9;
+                return this._put({ uri: this._baseUrl + 'name:' + args.vcsRootName + '/properties' }, { property: properties });
+
+              case 9:
+                return _context4.abrupt('return', _context4.sent);
+
+              case 10:
+              case 'end':
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function addProperties(_x4) {
+        return _ref4.apply(this, arguments);
+      }
+
+      return addProperties;
+    }()
   }, {
     key: '_createRequestJson',
     value: function _createRequestJson(args) {
@@ -155,6 +211,16 @@ var VcsRoot = function (_Client) {
       }
 
       return request;
+    }
+  }, {
+    key: '_createPropertyRequests',
+    value: function _createPropertyRequests(args) {
+      var properties = [];
+      for (var property in args.properties) {
+        properties.push({ name: property, value: args.properties[property] });
+      }
+
+      return properties;
     }
   }]);
 

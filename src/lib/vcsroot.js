@@ -1,4 +1,5 @@
 import Client from './client';
+import R from 'ramda';
 
 export default class VcsRoot extends Client {
 
@@ -35,6 +36,23 @@ export default class VcsRoot extends Client {
     return await super._delete({ uri: `${this._baseUrl}name:${args.name}` });
   }
 
+  /**
+   * @param {string} args.vcsRootName - the name of the vcsroot
+   * @param {object} args.properties - (Required) the object defining the properties to be set
+   *                                   {name1: value1, name2: value2}
+   */
+  async addProperties (args) {
+    const vcsRoot = await this.get({ name: args.vcsRootName });
+
+    if (!vcsRoot.isNothing) {
+      const newProperties = this._createPropertyRequests(args);
+      const existingProperties = R.differenceWith((x, y) => { x.name === y.name; }, vcsRoot.get().properties, newProperties);
+      const properties = existingProperties.concat(newProperties);
+
+      return await this._put({uri: `${this._baseUrl}name:${args.vcsRootName}/properties`}, { property: properties });
+    }
+  }
+
   _createRequestJson (args) {
     var request = {
       name: args.name,
@@ -54,5 +72,14 @@ export default class VcsRoot extends Client {
     }
 
     return request;
+  }
+
+  _createPropertyRequests (args) {
+    let properties = [];
+    for (let property in args.properties) {
+      properties.push({name: property, value: args.properties[property]});
+    }
+
+    return properties;
   }
 }

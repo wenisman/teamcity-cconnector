@@ -45,6 +45,18 @@ let result = connector.buildtype.create({name: 'My Buildtype', projectName: 'Pro
 let result = connector.buildtype.create({name: 'My Buildtype', projectId: 'Project_Id', template: 'TemplateId'});
 ```
 
+### Adding Parameters
+When you have created your BuildType you will want to amend the Parameters for your deployments
+``` javascript
+let result = connector.buildtype.addParameters({
+  buildTypeId: 'build_type_id',
+  parameters: {
+    parameter1: value1,
+    parameter2: value2
+  }
+})
+```
+
 
 ##VcsRoot
 All builds needs to get their source form somewhere, so provide an VcsRoot
@@ -64,6 +76,17 @@ let result = connector.vcsroot.create({
   branch: 'Branch name',
   vcsType: 'Type name'    
 });
+```
+
+### Adding Properties
+When you have created your Vcs Root you will want to amend the Properties
+``` javascript
+let result = connector.vcsroot.addProperties({
+  name: 'VcsRoot Name',
+  properties: {
+    property1: value1
+  }
+})
 ```
 
 This is a lot of options but lets go through them

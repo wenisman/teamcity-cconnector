@@ -23,14 +23,27 @@ describe('VcsRoot tests', () => {
   });
 
   it('should create a vcsroot', async () => {
-    const output = await vcs.create({
-      name: 'Test Vcs Root',
-      projectName: 'Child',
-      url: 'https://github.com/wenisman/teamcity-connector.git',
-      branch: 'master',
-      vcsType: 'jetbrains.git'
-    });
+    const vcsRoot = await vcs.get({ name: 'Test Vcs Root' });
 
-    output.isNothing.should.be.false;
+    if (vcsRoot.isNothing) {
+      const output = await vcs.create({
+        name: 'Test Vcs Root',
+        projectName: 'Child',
+        url: 'https://github.com/wenisman/teamcity-connector.git',
+        branch: 'master',
+        vcsType: 'jetbrains.git'
+      });
+      output.isNothing.should.be.false;
+    }
+  });
+
+  it('should set the properties', async () => {
+    await vcs.addProperties({
+      vcsRootName: 'Test Vcs Root',
+      properties: {
+        teamcitySshKey: 'test_account_key',
+        authMethod: 'TEAMCITY_SSH_KEY'
+      }
+    });
   });
 });

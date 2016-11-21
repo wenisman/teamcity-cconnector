@@ -1,4 +1,5 @@
 import Client from './client';
+import Promise from 'bluebird';
 
 export default class BuildType extends Client {
 
@@ -30,6 +31,16 @@ export default class BuildType extends Client {
     return await this._post({ uri: this._buildTypesUrl }, this._createRequestJson(args));
   }
 
+  /**
+   * create the parameters on the specified build type
+   * @param {string} args.buildTypeId - the id of the build type of create the parameters on
+   * @param {object} args.parameters - the object setting the value of the paramters by name
+   *                                   {name1: value1, name2: value2}
+   */
+  async addParameters (args) {
+    return await Promise.all(this._createParameterRequests(args));
+  }
+
   _createBuildTypesUrl (project) {
     return `${this._baseUrl}/projects/name:${project}/buildTypes/`;
   }
@@ -39,12 +50,11 @@ export default class BuildType extends Client {
       name: args.name
     };
 
-    request.project = { };
-    if (args.projectId) {
-      request.project.id = args.projectId;
-    } else {
-      request.project.locator = `name:${args.projectName}`;
-    }
+    request.project = {
+      locator: args.projectName
+                ? `name:${args.projectName}`
+                : `id:${args.projectId}`
+    };
 
     if (args.template) {
       request.template = {
@@ -53,5 +63,14 @@ export default class BuildType extends Client {
     }
 
     return request;
+  }
+
+  async _createParameterRequests (args) {
+    let requests = [];
+    for (let parameter in args.parameters) {
+      let uri = `${this._buildTypesUrl}id:${args.buildTypeId}/parameters/${parameter}`;
+      requests.push(this._put({uri: uri}, { value: args.parameters[parameter] }));
+    }
+    return requests;
   }
 }

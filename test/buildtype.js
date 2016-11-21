@@ -28,4 +28,14 @@ describe('buildType tests', () => {
       console.log(output);
     }
   });
+
+  it('should create the parameters', async () => {
+    const build = await bt.get({name: 'test build', project: 'Child'});
+    await bt.addParameters({
+      buildTypeId: build.get().id,
+      parameters: {
+        ExcludedCategories: 'newValue'
+      }
+    });
+  });
 });

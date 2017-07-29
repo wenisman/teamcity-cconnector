@@ -40,6 +40,8 @@
   },
   "dependencies": {
     "data.maybe": "^1.2.2",
-    "ramda": "^0.22.1"
+    "ramda": "^0.22.1",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
   }
 }

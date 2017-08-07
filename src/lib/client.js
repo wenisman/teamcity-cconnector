@@ -5,17 +5,17 @@ const createBaseUrl = (host) => {
   return `${host}/httpAuth/app/rest`;
 };
 
-const createRestOptions = (username, password) => {
+const createRestOptions = (args) => {
   return {
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      Accept: 'application/json'
     },
     json: true,
     auth: {
-      'user': username,
-      'pass': password,
-      'sendImmediately': true
+      user: args.username,
+      pass: args.password,
+      sendImmediately: true
     }
   };
 };
@@ -34,24 +34,24 @@ const sendRequest = (fn, uri, options) => {
 };
 
 const get = (args) => {
-  const options = createRestOptions(args.username, args.password);
+  const options = createRestOptions(args);
   return sendRequest(request.get, args.uri, options);
 };
 
 const put = (args) => {
-  let options = createRestOptions(args.username, args.password);
+  let options = createRestOptions(args);
   options.body = args.data;
   return sendRequest(request.put, args.uri, options);
 };
 
 const post = (args) => {
-  let options = createRestOptions(args.username, args.password);
+  let options = createRestOptions(args);
   options.body = args.data;
   return sendRequest(request.post, args.uri, options);
 };
 
 const del = (args) => {
-  const options = createRestOptions(args.username, args.password);
+  const options = createRestOptions(args);
   return sendRequest(request.delete, args.uri, options);
 };
 

@@ -1,58 +1,64 @@
-import request from 'request-promise';
-import maybe from 'data.maybe';
+const Task = require('data.task');
+const request = require('request');
 
-export default class Client {
+const createBaseUrl = (host) => {
+  return `${host}/httpAuth/app/rest`;
+};
 
-  constructor (baseurl, username, password) {
-    this._baseUrl = `${baseurl}/httpAuth/app/rest`;
-    this._options = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      json: true,
-      auth: {
-        'user': username,
-        'pass': password,
-        'sendImmediately': true
-      }
-    };
-
-    if (!!username && !!password) {
-      Object.assign(this._options, { auth: { user: username, pass: password, sendImmediately: true } });
+const createRestOptions = (username, password) => {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    json: true,
+    auth: {
+      'user': username,
+      'pass': password,
+      'sendImmediately': true
     }
-  }
+  };
+};
 
-  async _get (options) {
-    return this._executeRequest('get', options);
-  }
-
-  async _put (options, data) {
-    options = Object.assign(options, { body: data });
-    return this._executeRequest('put', options);
-  }
-
-  async _post (options, data) {
-    options = Object.assign(options, { body: data });
-    return this._executeRequest('post', options);
-  }
-
-  async _delete (options) {
-    return this._executeRequest('delete', options);
-  }
-
-  async _executeRequest (requestName, options) {
-    options = Object.assign(options, this._options);
-    options.uri = encodeURI(options.uri);
-    try {
-      return maybe.fromNullable(await request[requestName](options));
-    } catch (e) {
-      if (e.statusCode === 404) {
-        return maybe.Nothing();
+const sendRequest = (fn, uri, options) => {
+  return new Task(function (resolve, reject) {
+    let args = [encodeURI(uri), options, (err, response, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({response, data});
       }
+    }];
+    fn.apply(request, args);
+  });
+};
 
-      throw e;
-    }
-  }
-}
+const get = (args) => {
+  const options = createRestOptions(args.username, args.password);
+  return sendRequest(request.get, args.uri, options);
+};
 
+const put = (args) => {
+  let options = createRestOptions(args.username, args.password);
+  options.body = args.data;
+  return sendRequest(request.put, args.uri, options);
+};
+
+const post = (args) => {
+  let options = createRestOptions(args.username, args.password);
+  options.body = args.data;
+  return sendRequest(request.post, args.uri, options);
+};
+
+const del = (args) => {
+  const options = createRestOptions(args.username, args.password);
+  return sendRequest(request.delete, args.uri, options);
+};
+
+module.exports = {
+  createBaseUrl,
+  get,
+  put,
+  post,
+  del
+};

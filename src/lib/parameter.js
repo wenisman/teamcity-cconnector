@@ -1,5 +1,4 @@
 const Client = require('./client');
-const Task = require('folktale/concurrency/task');
 
 const baseUri = (args) => {
   return `${Client.createBaseUrl(args.host)}/projects/name:${args.project}/parameters`;
@@ -17,16 +16,6 @@ const list = (args) => {
 const get = (args) => {
   args.uri = parameterUri(args);
   return Client.get(args);
-};
-
-const put = (args) => {
-  args.uri = parameterUri(args);
-  return Client.put(args);
-};
-
-const post = (args) => {
-  args.uri = parameterUri(args);
-  return Client.post(args);
 };
 
 const del = (args) => {
@@ -55,22 +44,20 @@ const createRequestJson = (args) => {
 };
 
 const create = (args) => {
+  args.uri = parameterUri(args);
   args.body = createRequestJson(args);
-  return get(args)
+  return Client.get(args)
     .chain(result => {
-      return put(args);
+      return Client.put(args);
     })
     .orElse(() => {
       // the parameter doesnt exist so create one
-      return post(args);
+      return Client.post(args);
     });
 };
 
 const remove = (args) => {
   return get(args)
-    .chain(result => {
-      return Task.of(true);
-    })
     .orElse(() => {
       // the parameter doesnt exist
       return del(args);

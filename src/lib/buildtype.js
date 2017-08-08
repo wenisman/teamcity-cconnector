@@ -21,7 +21,6 @@ const get = (args) => {
 
 const create = (args) => {
   return get(args)
-    .chain(() => { return Task.of(null); })
     .orElse(() => {
       args.body = createRequestJson(args);
       return Client.post(args);

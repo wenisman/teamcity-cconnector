@@ -19,16 +19,6 @@ const get = (args) => {
   return Client.get(args);
 };
 
-const put = (args) => {
-  args.uri = projectUri(args);
-  return Client.put(args);
-};
-
-const post = (args) => {
-  args.uri = projectUri(args);
-  return Client.post(args);
-};
-
 const remove = (args) => {
   args.uri = projectUri(args);
   return Client.del(args);
@@ -47,14 +37,15 @@ const createRequestJson = (args) => {
 };
 
 const create = (args) => {
-  return get(args)
+  args.uri = projectUri(args);
+  return Client.get(args)
     .chain(result => {
       args.body = R.mergeDeepWithKey(result, args.data);
-      return put(args);
+      return Client.put(args);
     })
     .orElse(() => {
       args.body = createRequestJson(args);
-      return post(args);
+      return Client.post(args);
     });
 };
 

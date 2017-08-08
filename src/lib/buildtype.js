@@ -1,76 +1,70 @@
-import Client from './client';
-import Promise from 'bluebird';
+const Client = require('./client');
+const R = require('ramda');
+const Task = require('folktale/concurrency/task');
 
-export default class BuildType extends Client {
+const baseUri = (args) => {
+  return `${Client.createBaseUrl(args.host)}/projects/name:${args.project}/buildTypes`;
+};
 
-  /**
-   * @constructor
-   */
-  constructor (baseUrl, name, password) {
-    super(baseUrl, name, password);
-    this._buildTypesUrl = `${this._baseUrl}/buildTypes/`;
-  }
+const buildTypeUri = (args) => {
+  return `${Client.createBaseUrl(args.host)}/buildTypes`;
+};
 
-  /**
-   * Get the buildType that matches the name provided
-   * @param {string} args.name - the name of the buildType to look for
-   * @param {string} args.project - the name of the parent project for the buildType
-   */
-  async get (args) {
-    return await super._get({ uri: `${this._createBuildTypesUrl(args.project)}name:${args.name}` });
-  }
+const buildTypeProjectUri = (args) => {
+  return `${baseUri(args)}/name:${args.name}`;
+};
 
-  /**
-   * Create the request to send to teamcity
-   * @param {string} args.name - the name of the buildType to create
-   * @param {string} args.projectId - the name of the project the buildType will belong to
-   * @param {string} args.projectName - the name of the project to place the buildtype in
-   * @param {string} args.template - the id of the template to use for the buildType
-   */
-  async create (args) {
-    return await this._post({ uri: this._buildTypesUrl }, this._createRequestJson(args));
-  }
+const get = (args) => {
+  args.uri = buildTypeProjectUri(args);
+  return Client.get(args);
+};
 
-  /**
-   * create the parameters on the specified build type
-   * @param {string} args.buildTypeId - the id of the build type of create the parameters on
-   * @param {array} args.parameters - the object setting the value of the paramters by name
-   *                                   {name: name1, value: value1}
-   */
-  async addParameters (args) {
-    return await Promise.all(this._createParameterRequests(args));
-  }
-
-  _createBuildTypesUrl (project) {
-    return `${this._baseUrl}/projects/name:${project}/buildTypes/`;
-  }
-
-  _createRequestJson (args) {
-    var request = {
-      name: args.name
-    };
-
-    request.project = {
-      locator: args.projectName
-                ? `name:${args.projectName}`
-                : `id:${args.projectId}`
-    };
-
-    if (args.template) {
-      request.template = {
-        id: args.template
-      };
-    }
-
-    return request;
-  }
-
-  async _createParameterRequests (args) {
-    let requests = [];
-    args.parameters.forEach((parameter) => {
-      let uri = `${this._buildTypesUrl}id:${args.buildTypeId}/parameters/${parameter.name}`;
-      requests.push(this._put({uri: uri}, { value: parameter.value }));
+const create = (args) => {
+  return get(args)
+    .chain(() => { return Task.of(null); })
+    .orElse(() => {
+      args.body = createRequestJson(args);
+      return Client.post(args);
     });
-    return requests;
+};
+
+const addParameters = (args) => {
+  return Task.waitAll(R.map(createParameterRequests(args)));
+};
+
+const createParameterRequests = (args) => {
+  let requests = [];
+  args.parameters.forEach((parameter) => {
+    args.uri = `${buildTypeUri(args)}/id:${args.buildTypeId}/parameters/${parameter.name}`;
+    args.body = { value: parameter.value };
+    requests.push(Client.put(args));
+  });
+
+  return requests;
+};
+
+const createRequestJson = (args) => {
+  var request = {
+    name: args.name
+  };
+
+  request.project = {
+    locator: args.projectName
+              ? `name:${args.projectName}`
+              : `id:${args.projectId}`
+  };
+
+  if (args.template) {
+    request.template = {
+      id: args.template
+    };
   }
-}
+
+  return request;
+};
+
+module.exports = {
+  get,
+  create,
+  addParameters
+};

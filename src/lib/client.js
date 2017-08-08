@@ -1,4 +1,4 @@
-const Task = require('data.task');
+const Task = require('folktale/concurrency/task');
 const request = require('request');
 
 const createBaseUrl = (host) => {
@@ -40,13 +40,13 @@ const get = (args) => {
 
 const put = (args) => {
   let options = createRestOptions(args);
-  options.body = args.data;
+  options.body = args.data || {};
   return sendRequest(request.put, args.uri, options);
 };
 
 const post = (args) => {
   let options = createRestOptions(args);
-  options.body = args.data;
+  options.body = args.data || {};
   return sendRequest(request.post, args.uri, options);
 };
 

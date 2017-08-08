@@ -1,57 +1,66 @@
-import Client from './client';
+const Client = require('./client');
+const R = require('ramda');
 
-export default class Project extends Client {
+const baseUri = (args) => {
+  return `${Client.createBaseUrl(args.host)}/projects`;
+};
 
-  /**
-   * @constructor
-   */
-  constructor (baseurl, username, password) {
-    super(baseurl, username, password);
-    this._baseUrl = `${this._baseUrl}/projects/`;
+const projectUri = (args) => {
+  return `${baseUri(args)}/name:${args.name}`;
+};
+
+const list = (args) => {
+  args.uri = baseUri(args);
+  return Client.get(args);
+};
+
+const get = (args) => {
+  args.uri = projectUri(args);
+  return Client.get(args);
+};
+
+const put = (args) => {
+  args.uri = projectUri(args);
+  return Client.put(args);
+};
+
+const post = (args) => {
+  args.uri = projectUri(args);
+  return Client.post(args);
+};
+
+const remove = (args) => {
+  args.uri = projectUri(args);
+  return Client.del(args);
+};
+
+const createRequestJson = (args) => {
+  var projJson = { name: args.name };
+
+  if (args.parent) {
+    projJson.parentProject = {
+      locator: `name:${args.parent || '_Root'}`
+    };
   }
 
-  /**
-   * Get the project that matches the name provided
-   * @param {string} name - the name of the project
-   */
-  async get (args) {
-    return await super._get({ uri: `${this._baseUrl}name:${args.name}` });
-  }
+  return projJson;
+};
 
-  /**
-   * Create a basic project with the name provided
-   * @param {string} args.name - the name of the project to create
-   * @param {string} args.parent - the name of the parent that this project belongs to
-   */
-  async create (args) {
-    return await this._post({ uri: this._baseUrl }, this._createRequestJson(args));
-  }
+const create = (args) => {
+  return get(args)
+    .chain(result => {
+      args.body = R.mergeDeepWithKey(result, args.data);
+      return put(args);
+    })
+    .orElse(() => {
+      args.body = createRequestJson(args);
+      return post(args);
+    });
+};
 
-  /**
-   * Update the project with the provided data
-   * @param {project} data - the full data object required to build a project
-   */
-  async update (data) {
-    return await this._put({ uri: this._baseUrl }, data);
-  }
-
-  /**
-   * Delete the project with the provided name
-   * @param {string} name - the name of the project to delete
-   */
-  async delete (args) {
-    return await super._delete({ uri: `${this._baseUrl}name:${args.name}` });
-  }
-
-  _createRequestJson (args) {
-    var projJson = { name: args.name };
-
-    if (args.parent) {
-      projJson.parentProject = {
-        locator: `name:${args.parent}`
-      };
-    }
-
-    return projJson;
-  }
+module.exports = {
+  get,
+  list,
+  create,
+  remove
 };

@@ -1,7 +1,7 @@
 const Client = require('./client');
 
 const baseUri = (args) => {
-  return `${Client.createBaseUrl(args.host)}/projects/name:${args.project}/parameters`;
+  return `${Client.createBaseUrl(args.host)}/projects/name:${args.project || '<Root project>'}/parameters`;
 };
 
 const parameterUri = (args) => {
@@ -46,6 +46,7 @@ const createRequestJson = (args) => {
 const create = (args) => {
   args.uri = parameterUri(args);
   args.body = createRequestJson(args);
+  console.log('create request', args);
   return Client.get(args)
     .chain(result => {
       return Client.put(args);

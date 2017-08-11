@@ -1,8 +1,8 @@
-const Task = require('folktale/concurrency/task');
+const { task } = require('folktale/concurrency/task');
 const request = require('request');
 
 const createBaseUrl = (host) => {
-  return `${host}/httpAuth/app/rest`;
+  return `http://${host}/httpAuth/app/rest`;
 };
 
 const createRestOptions = (args) => {
@@ -21,12 +21,14 @@ const createRestOptions = (args) => {
 };
 
 const sendRequest = (fn, uri, options) => {
-  return new Task(function (resolve, reject) {
+  console.log('send request', uri, options);
+  return task((resolver) => {
     let args = [encodeURI(uri), options, (err, response, data) => {
+      console.log('request result', err, response, data);
       if (err) {
-        reject(err);
+        return resolver.reject(err);
       } else {
-        resolve({response, data});
+        return resolver.resolve({response, data});
       }
     }];
     fn.apply(request, args);

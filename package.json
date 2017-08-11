@@ -11,7 +11,7 @@
   },
   "scripts": {
     "eslint": "eslint --fix src test",
-    "test": "istanbul cover node_modules/.bin/_mocha -- -u exports -R spec -r test/setup.js test/*{,*/}*.js"
+    "test": "istanbul cover node_modules/.bin/_mocha -- --recursive -u exports -R spec -r test/setup.js test/*{,*/}*.js"
   },
   "devDependencies": {
     "chai": "^4.1.1",

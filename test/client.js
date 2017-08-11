@@ -1,3 +1,4 @@
+/*
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import chai from 'chai';
@@ -47,3 +48,4 @@ describe('base client tests', () => {
       });
   });
 });
+*/

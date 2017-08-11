@@ -57,19 +57,18 @@ const remove = (args) => {
  */
 const addProperties = (args) => {
   return this.get({ name: args.vcsRootName })
-  .chain(vcsRoot => {
-    if (!vcsRoot.isNothing) {
-      const existingProperties = R.differenceWith((x, y) => { x.name === y.name; },
-        vcsRoot.properties.property,
-        args.properties);
-      const properties = existingProperties.concat(args.properties);
+    .chain(vcsRoot => {
+      if (!vcsRoot.isNothing) {
+        const existingProperties = R.differenceWith((x, y) => { return x.name === y.name; },
+          vcsRoot.properties.property,
+          args.properties);
+        const properties = existingProperties.concat(args.properties);
 
-      return Client.put({
-        uri: `${baseUri(args)}/name:${args.vcsRootName}/properties`, 
-        body: { property: properties }
-      });
-    }
-  });
+        args.uri = `${baseUri(args)}/name:${args.vcsRootName}/properties`;
+        args.body = { property: properties };
+        return Client.put(args);
+      }
+    });
 };
 
 module.exports = {

@@ -1,3 +1,32 @@
+const connector = require('../src');
+const { of } = require('folktale/concurrency/task');
+
+describe('vcs root', () => {
+  before(async () => {
+    await connector.project.create({
+      host: '192.168.99.100:8111',
+      username: 'admin',
+      password: 'password',
+      name: 'parent project'
+    }).orElse(err => {
+      console.log('error', err);
+      return of(err);
+    }).run().promise();
+  });
+
+  it('should create a vcs root', async () => {
+    connector.vcsroot.create({
+      host: '192.168.99.100:8111',
+      username: 'admin',
+      password: 'password',
+      name: 'test vcs root',
+      projectName: 'parent project',
+      url: 'https://github.com/wenisman/teamcity-connector.git',
+      branch: 'master',
+      vcsType: 'jetbrains.git'
+    }).run().promise();
+  });
+});
 /*
 import VcsRoot from '../src/lib/vcsroot';
 import Project from '../src/lib/project';

@@ -29,7 +29,7 @@ const createRequestJson = (args) => {
 
   if (args.parent) {
     projJson.parentProject = {
-      locator: `name:${args.parent || '_Root'}`
+      locator: `name:${args.parent || '<Root project>'}`
     };
   }
 
@@ -37,12 +37,8 @@ const createRequestJson = (args) => {
 };
 
 const create = (args) => {
-  args.uri = projectUri(args);
+  args.uri = baseUri(args);
   return Client.get(args)
-    .chain(result => {
-      args.body = R.mergeDeepWithKey(result, args.data);
-      return Client.put(args);
-    })
     .orElse(() => {
       args.body = createRequestJson(args);
       return Client.post(args);

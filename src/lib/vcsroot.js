@@ -17,7 +17,7 @@ const get = (args) => {
  * @param {string} args.projectId - the name of the project the VcsRoot will belong to
  * @param {string} args.url - (Required) the url to the repository to use for the vcs root
  * @param {string} args.branch - the main branch to use for the repository
- * @param {string} args.vcsType - (Required) the type of vcs connector to use [jetbrains.get|perforce|svn|tfs]
+ * @param {string} args.vcsType - (Required) the type of vcs connector to use [jetbrains.git|perforce|svn|tfs]
  */
 const create = (args) => {
   args.uri = baseUri(args);

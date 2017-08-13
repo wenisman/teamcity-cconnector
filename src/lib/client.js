@@ -16,45 +16,40 @@ const createRestOptions = (args) => {
       user: args.username,
       pass: args.password,
       sendImmediately: true
-    }
+    },
+    body: args.body || {}
   };
 };
 
-const sendRequest = (fn, uri, options) => {
-  console.log('send request', uri, options);
+const sendRequest = (fn, args) => {
+  const options = createRestOptions(args);
   return task((resolver) => {
-    let args = [encodeURI(uri), options, (err, response, data) => {
-      console.log('request result', err, response, data);
-      if (err) {
-        return resolver.reject(err);
+    let inputs = [encodeURI(args.uri), options, (err, response, data) => {
+      let statusCode = (response && response.statusCode) || 200;
+      if (err || statusCode !== 200) {
+        return resolver.reject({ statusCode, err, data });
       } else {
         return resolver.resolve({response, data});
       }
     }];
-    fn.apply(request, args);
+    fn.apply(request, inputs);
   });
 };
 
 const get = (args) => {
-  const options = createRestOptions(args);
-  return sendRequest(request.get, args.uri, options);
+  return sendRequest(request.get, args);
 };
 
 const put = (args) => {
-  let options = createRestOptions(args);
-  options.body = args.data || {};
-  return sendRequest(request.put, args.uri, options);
+  return sendRequest(request.put, args);
 };
 
 const post = (args) => {
-  let options = createRestOptions(args);
-  options.body = args.data || {};
-  return sendRequest(request.post, args.uri, options);
+  return sendRequest(request.post, args);
 };
 
 const del = (args) => {
-  const options = createRestOptions(args);
-  return sendRequest(request.delete, args.uri, options);
+  return sendRequest(request.delete, args);
 };
 
 module.exports = {

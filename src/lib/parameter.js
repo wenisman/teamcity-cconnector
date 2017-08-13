@@ -46,7 +46,6 @@ const createRequestJson = (args) => {
 const create = (args) => {
   args.uri = parameterUri(args);
   args.body = createRequestJson(args);
-  console.log('create request', args);
   return Client.get(args)
     .chain(result => {
       return Client.put(args);

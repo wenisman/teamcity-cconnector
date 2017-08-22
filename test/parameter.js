@@ -1,4 +1,5 @@
 const connector = require('../src');
+const maybe = require('folktale/maybe');
 
 describe.skip('parameter', () => {
   it('should create a basic parameter', async () => {
@@ -10,6 +11,7 @@ describe.skip('parameter', () => {
       password: 'password'
     }).run().promise();
 
-    //console.log(result);
+    console.log(result);
+    maybe.hasInstance(result).should.be.true;
   });
 });

@@ -1,4 +1,5 @@
 const { task } = require('folktale/concurrency/task');
+const maybe = require('folktale/maybe');
 const request = require('request');
 
 const createBaseUrl = (host) => {
@@ -26,10 +27,14 @@ const sendRequest = (fn, args) => {
   return task((resolver) => {
     let inputs = [encodeURI(args.uri), options, (err, response, data) => {
       let statusCode = (response && response.statusCode) || 200;
-      if (err || statusCode !== 200) {
+      if (err) {
         return resolver.reject({ statusCode, err, data });
       } else {
-        return resolver.resolve({response, data});
+        let result = (statusCode === 404)
+          ? maybe.Nothing()
+          : maybe.fromNullable({response, data});
+
+        return resolver.resolve(result);
       }
     }];
     fn.apply(request, inputs);

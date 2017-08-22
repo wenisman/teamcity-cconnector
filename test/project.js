@@ -1,3 +1,31 @@
+const connector = require('../src');
+const maybe = require('folktale/maybe');
+
+describe('projects', () => {
+  it('should create the basic project', async () => {
+    let result = await connector.project.create({
+      host: '192.168.99.100:8111',
+      username: 'admin',
+      password: 'password',
+      name: 'parent project'
+    }).run().promise();
+
+    maybe.hasInstance(result).should.be.true;
+  });
+
+  it('should create a sub-project', async () => {
+    let result = await connector.project.create({
+      host: '192.168.99.100:8111',
+      username: 'admin',
+      password: 'password',
+      name: 'child project',
+      parent: 'parent project'
+    }).run().promise();
+
+    maybe.hasInstance(result).should.be.true;
+  });
+});
+
 /*
 import Project from '../src/lib/project';
 

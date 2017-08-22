@@ -1,5 +1,4 @@
 const Client = require('./client');
-const R = require('ramda');
 
 const baseUri = (args) => {
   return `${Client.createBaseUrl(args.host)}/projects`;
@@ -37,9 +36,10 @@ const createRequestJson = (args) => {
 };
 
 const create = (args) => {
-  args.uri = baseUri(args);
+  args.uri = projectUri(args);
   return Client.get(args)
     .orElse(() => {
+      args.uri = baseUri(args);
       args.body = createRequestJson(args);
       return Client.post(args);
     });

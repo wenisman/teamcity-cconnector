@@ -1,5 +1,6 @@
 const Client = require('./client');
 const R = require('ramda');
+const maybe = require('folktale/maybe');
 
 const baseUri = (args) => {
   return `${Client.createBaseUrl(args.host)}/vcs-roots`;
@@ -20,9 +21,12 @@ const get = (args) => {
  * @param {string} args.vcsType - (Required) the type of vcs connector to use [jetbrains.git|perforce|svn|tfs]
  */
 const create = (args) => {
-  args.uri = baseUri(args);
-  args.body = createRequestJson(args);
-  return Client.post(args);
+  return get(args)
+    .orElse(() => {
+      args.uri = baseUri(args);
+      args.body = createRequestJson(args);
+      return Client.post(args);
+    });
 };
 
 const createRequestJson = (args) => {
@@ -56,11 +60,12 @@ const remove = (args) => {
  * @param {string} args.vcsRootName
  */
 const addProperties = (args) => {
-  return this.get({ name: args.vcsRootName })
+  args.name = args.vcsRootName;
+  return get(args)
     .chain(vcsRoot => {
-      if (!vcsRoot.isNothing) {
+      if (maybe.hasInstance(vcsRoot)) {
         const existingProperties = R.differenceWith((x, y) => { return x.name === y.name; },
-          vcsRoot.properties.property,
+          vcsRoot.getOrElse({}).data.properties.property,
           args.properties);
         const properties = existingProperties.concat(args.properties);
 
